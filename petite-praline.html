@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>[hidden]{display:none!important}body{margin:0}</style>
+</head>
+<body>
+<title>Petite Praline Chocolaterie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Jost:wght@400;500;600&family=Parisienne&display=swap">
+<style>
+/* Layout: a Parisian chocolate-shop window. Striped awning band, a scalloped valance under the
+   Flexbox navbar, a hero "box of bonbons", then a shop grid set like a patisserie counter. */
+:root{
+  --bg:#fcf1ee;          /* rose-tinted paper */
+  --surface:#fffaf6;     /* crème */
+  --rose:#f4cfd6;        /* rose poudré */
+  --rose-deep:#c75b74;   /* framboise */
+  --pistache:#c9dcb4;
+  --cacao:#4a281c;       /* dark chocolate ink */
+  --cacao-soft:#81594a;
+  --gold:#b8862b;
+  --gold-soft:#f1dcaa;
+  --line:#ecd3cc;
+  --on-accent:#fffaf6;
+  --shadow:0 10px 30px -12px rgb(74 40 28 / .28);
+  --f-script:"Parisienne","Snell Roundhand","Apple Chancery",cursive;
+  --f-display:"Fraunces","Didot","Bodoni 72",Georgia,serif;
+  --f-body:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1f130e; --surface:#2b1b14; --rose:#4d2a31; --rose-deep:#ee8aa2; --pistache:#3d4a31;
+  --cacao:#f6e7dd; --cacao-soft:#cdb0a2; --gold:#e3b75a; --gold-soft:#5a4420; --line:#43291f;
+  --on-accent:#1f130e; --shadow:0 10px 30px -12px rgb(0 0 0 / .6); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#1f130e; --surface:#2b1b14; --rose:#4d2a31; --rose-deep:#ee8aa2; --pistache:#3d4a31;
+  --cacao:#f6e7dd; --cacao-soft:#cdb0a2; --gold:#e3b75a; --gold-soft:#5a4420; --line:#43291f;
+  --on-accent:#1f130e; --shadow:0 10px 30px -12px rgb(0 0 0 / .6); color-scheme:dark; }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cacao);font-family:var(--f-body);font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.1;margin:0;text-wrap:balance}
+p{margin:0}
+button,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px dashed var(--rose-deep);outline-offset:3px;border-radius:6px}
+.script{font-family:var(--f-script);font-weight:400;color:var(--rose-deep)}
+.eyebrow{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--cacao-soft)}
+
+/* ---------- announcement awning ---------- */
+.awning{background:repeating-linear-gradient(90deg,var(--rose) 0 28px,var(--surface) 28px 56px);border-bottom:1px solid var(--line)}
+.awning p{max-width:max-content;margin:0 auto;padding:4px 14px;background:var(--surface);font-size:.8rem;letter-spacing:.06em;text-align:center;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+
+/* ================= NAVBAR (built with Flexbox) ================= */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50}
+.navbar{background:var(--surface);box-shadow:0 1px 0 var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo-mark{width:42px;height:42px;flex:none}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-text b{font-family:var(--f-script);font-weight:400;font-size:2rem;color:var(--cacao);line-height:.9}
+.logo-text small{font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cacao-soft);padding-left:4px}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0}
+.nav-links a{display:block;text-decoration:none;padding:8px 14px;border-radius:999px;font-weight:500;font-size:.95rem;transition:background .2s,color .2s}
+.nav-links a:hover,.nav-links a[aria-current="true"]{background:var(--rose);color:var(--cacao)}
+.nav-actions{display:flex;align-items:center;gap:6px}
+.icon-btn{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid transparent;background:transparent;cursor:pointer;transition:background .2s,transform .2s}
+.icon-btn:hover{background:var(--rose);transform:rotate(-6deg)}
+.icon-btn svg{width:22px;height:22px;stroke:var(--cacao);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.badge{position:absolute;top:2px;right:0;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--rose-deep);color:var(--on-accent);font-size:.72rem;font-weight:600;display:flex;align-items:center;justify-content:center;border:2px solid var(--surface)}
+.badge.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.5)}100%{transform:scale(1)}}
+.menu-btn{display:none}
+/* scalloped valance under the navbar */
+.valance{height:14px;background:radial-gradient(circle at 50% 0,var(--surface) 10px,transparent 10.5px) 0 0/24px 14px repeat-x;filter:drop-shadow(0 1px 0 var(--line))}
+
+/* search panel */
+.search-panel{background:var(--surface);border-bottom:1px solid var(--line)}
+.search-panel .wrap{display:flex;gap:10px;align-items:center;padding-block:12px}
+.search-panel input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 18px}
+.search-panel input::placeholder{color:var(--cacao-soft)}
+
+@media (max-width:880px){
+  .menu-btn{display:flex}
+  .nav-links{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:2px;background:var(--surface);
+    padding:10px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px));box-shadow:var(--shadow);border-top:1px solid var(--line)}
+  .nav-links a{padding:12px 16px;font-size:1.05rem}
+  .navbar{position:relative}
+}
+@media (max-width:420px){ .logo-text b{font-size:1.65rem} .logo-mark{width:34px;height:34px} .nav-inner{gap:8px} .icon-btn{width:40px;height:40px} }
+
+/* ---------- hero ---------- */
+.hero{padding-block:40px 56px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:20px;min-width:0}
+.hero .script{font-size:2.2rem;line-height:1}
+.hero h1{font-size:clamp(2.4rem,5.4vw,4.3rem);letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--rose-deep);font-weight:400}
+.hero p.lede{font-size:1.1rem;max-width:46ch;color:var(--cacao-soft)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 24px;font-weight:600;text-decoration:none;cursor:pointer;border:1.5px solid var(--cacao);background:transparent;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--cacao);color:var(--surface);box-shadow:var(--shadow)}
+.btn.ghost:hover{background:var(--rose)}
+.hero-art{position:relative;min-width:0}
+.hero-art svg.box{width:100%;height:auto;display:block;max-width:520px;margin:0 auto;filter:drop-shadow(0 24px 30px rgb(74 40 28 / .25))}
+.stamp{position:absolute;top:-6px;right:2%;width:120px;height:120px}
+.stamp svg{width:100%;height:100%;animation:spin 22s linear infinite}
+.stamp text{font-family:var(--f-body);font-size:10.5px;letter-spacing:3px;fill:var(--cacao);font-weight:500}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float{animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.hero-notes{display:flex;gap:22px;flex-wrap:wrap;font-size:.88rem;color:var(--cacao-soft)}
+.hero-notes span{display:inline-flex;align-items:center;gap:6px}
+.hero-notes svg{width:16px;height:16px;fill:var(--gold)}
+
+/* ---------- shop ---------- */
+.shop{padding-block:24px 72px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.section-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
+.section-head h2 .script{font-size:1.15em}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:500;font-size:.9rem;transition:all .2s}
+.chip:hover{border-color:var(--rose-deep)}
+.chip[aria-pressed="true"]{background:var(--rose-deep);border-color:var(--rose-deep);color:var(--on-accent)}
+.result-note{font-size:.9rem;color:var(--cacao-soft);margin-bottom:16px;min-height:1.4em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{background:var(--surface);border-radius:26px 26px 18px 18px;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);transition:transform .3s cubic-bezier(.3,1.4,.5,1),box-shadow .3s}
+.card:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:var(--shadow)}
+.card-art{position:relative;aspect-ratio:5/4;max-width:100%;display:flex;align-items:center;justify-content:center;background:var(--tint)}
+.card-art svg{width:86%;height:auto;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.card:hover .card-art svg{transform:scale(1.06) rotate(2deg)}
+.tag{position:absolute;top:12px;left:12px;background:var(--surface);color:var(--cacao);font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;box-shadow:0 2px 6px rgb(74 40 28 / .12)}
+.cocoa{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;background:var(--cacao);color:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;line-height:1}
+.cocoa small{font-size:.5rem;letter-spacing:.08em;font-weight:500;opacity:.85}
+.card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-body h3{font-size:1.25rem}
+.card-body .en{font-size:.86rem;color:var(--cacao-soft);font-style:italic;font-family:var(--f-display)}
+.card-body .meta{font-size:.8rem;color:var(--cacao-soft);letter-spacing:.04em}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:10px}
+.price{font-family:var(--f-display);font-size:1.3rem;font-weight:600;font-variant-numeric:tabular-nums}
+.add{border:0;background:var(--cacao);color:var(--surface);border-radius:999px;padding:9px 16px;font-weight:600;font-size:.88rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,background .2s}
+.add:hover{transform:scale(1.05)}
+.add.added{background:var(--rose-deep);color:var(--on-accent)}
+.empty{grid-column:1/-1;text-align:center;padding:48px 16px;background:var(--surface);border:1.5px dashed var(--line);border-radius:24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.empty .script{font-size:2rem}
+
+/* ---------- promises ---------- */
+.promises{background:var(--rose);padding-block:56px;position:relative}
+.promises::before,.promises::after{content:"";position:absolute;left:0;right:0;height:14px;background:radial-gradient(circle at 50% 100%,var(--rose) 10px,transparent 10.5px) 0 0/24px 14px repeat-x}
+.promises::before{top:-14px}
+.promises::after{bottom:-14px;transform:scaleY(-1)}
+.promises .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.promise{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.promise svg{flex:none;width:52px;height:52px}
+.promise h3{font-size:1.2rem;margin-bottom:4px}
+.promise p{font-size:.95rem;color:var(--cacao-soft)}
+
+/* ---------- coffret feature ---------- */
+.feature{padding-block:80px 64px}
+.feature-card{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:36px;padding:36px;position:relative;overflow:hidden}
+.feature-card::after{content:"";position:absolute;inset:auto -60px -60px auto;width:220px;height:220px;border-radius:50%;background:var(--gold-soft);opacity:.6;z-index:0}
+.feature-card > *{position:relative;z-index:1;min-width:0}
+.feature-card h2{font-size:clamp(1.8rem,3.4vw,2.6rem)}
+.feature-card p{color:var(--cacao-soft);max-width:44ch}
+.feature-copy{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.feature-art svg{width:100%;height:auto;max-width:420px;display:block;margin:0 auto}
+
+/* ---------- newsletter + footer ---------- */
+.letter{padding-block:8px 72px}
+.letter-box{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;padding:40px 20px;border:2px dashed var(--rose-deep);border-radius:28px}
+.letter-box h2{font-size:clamp(1.7rem,3vw,2.3rem)}
+.letter-box p{color:var(--cacao-soft);max-width:48ch}
+.letter-form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:480px}
+.letter-form input{flex:1 1 220px;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:12px 18px;background:var(--surface)}
+.letter-msg{font-weight:500;color:var(--rose-deep);min-height:1.5em}
+footer{background:var(--cacao);color:var(--surface)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-block:40px}
+footer .logo-text b{color:var(--surface)}
+footer .logo-text small{color:var(--surface);opacity:.75}
+footer p,footer li{font-size:.9rem;opacity:.85}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+footer h4{margin:0 0 10px;font-family:var(--f-display);font-weight:600;font-size:1rem}
+.footer-note{border-top:1px solid rgb(255 255 255 / .15)}
+.footer-note .wrap{padding-block:14px;font-size:.8rem;opacity:.7}
+
+/* ---------- cart drawer ---------- */
+.overlay{position:fixed;inset:0;background:rgb(31 19 14 / .45);z-index:70;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:80;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .4s cubic-bezier(.3,1.1,.4,1);box-shadow:var(--shadow);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.drawer-head h2{font-size:1.5rem}
+.drawer-items{flex:1;overflow-y:auto;padding:12px 20px;display:flex;flex-direction:column;gap:14px}
+.line{display:flex;gap:12px;align-items:center}
+.line-art{width:64px;height:64px;border-radius:16px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--tint)}
+.line-art svg{width:90%}
+.line-info{flex:1;min-width:0}
+.line-info b{display:block;font-family:var(--f-display);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.line-info span{font-size:.85rem;color:var(--cacao-soft)}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{width:30px;height:30px;border:0;background:transparent;cursor:pointer;font-size:1.05rem;border-radius:50%}
+.qty button:hover{background:var(--rose)}
+.qty output{min-width:22px;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.drawer-foot{border-top:1px solid var(--line);padding:16px 20px 20px;display:flex;flex-direction:column;gap:8px}
+.sum{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.sum.total{font-family:var(--f-display);font-size:1.3rem;font-weight:600;padding-top:6px;border-top:1px dashed var(--line)}
+.ship-bar{height:8px;border-radius:99px;background:var(--rose);overflow:hidden}
+.ship-bar i{display:block;height:100%;background:var(--rose-deep);border-radius:99px;transition:width .4s}
+.ship-note{font-size:.85rem;color:var(--cacao-soft)}
+.drawer-empty{text-align:center;padding:40px 10px;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--cacao-soft)}
+.drawer-empty .script{font-size:2rem}
+
+/* ---------- modal + toast ---------- */
+.modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;background:rgb(31 19 14 / .5)}
+.modal-card{background:var(--surface);border-radius:30px;padding:32px 28px;max-width:420px;width:100%;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;box-shadow:var(--shadow);animation:rise .5s cubic-bezier(.3,1.5,.5,1)}
+.modal-card .script{font-size:3rem;line-height:1}
+.modal-card p{color:var(--cacao-soft)}
+@keyframes rise{from{transform:translateY(30px) scale(.9);opacity:0}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--cacao);color:var(--surface);padding:12px 22px;border-radius:999px;z-index:95;font-weight:500;transition:transform .4s cubic-bezier(.3,1.5,.5,1);box-shadow:var(--shadow);max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+
+/* sparkle canvas */
+#sparkles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100}
+
+@media (max-width:880px){
+  .hero .wrap,.feature-card{grid-template-columns:1fr}
+  .hero-art{order:-1;max-width:440px;margin:0 auto;width:100%}
+  .promises .wrap{grid-template-columns:1fr}
+  .feature-card{padding:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<!-- shared SVG icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1.3 10.2A2 2 0 0 1 15.7 20H8.3a2 2 0 0 1-2-1.8L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 1c.6 6 5 10.4 11 11-6 .6-10.4 5-11 11-.6-6-5-10.4-11-11 6-.6 10.4-5 11-11z"/></symbol>
+  </defs>
+</svg>
+
+<div class="awning"><p>Livraison offerte dès 40 € · Free delivery on orders over €40</p></div>
+
+<header class="site-header">
+  <nav class="navbar" aria-label="Main">
+    <div class="wrap nav-inner">
+      <!-- 1. Logo -->
+      <a class="logo" href="#top" aria-label="Petite Praline home">
+        <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" fill="var(--rose)"/>
+          <path d="M24 37c-8-5.5-12-10-12-15a6 6 0 0 1 12-1.5A6 6 0 0 1 36 22c0 5-4 9.5-12 15z" fill="var(--cacao)"/>
+          <path d="M17 22c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0" stroke="var(--gold)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text"><b>Petite Praline</b><small>Chocolaterie · Paris</small></span>
+      </a>
+
+      <!-- 2. Category links -->
+      <ul class="nav-links" id="navLinks" hidden>
+        <li><a href="#boutique" data-cat="bonbons">Bonbons</a></li>
+        <li><a href="#boutique" data-cat="tablettes">Tablettes</a></li>
+        <li><a href="#boutique" data-cat="macarons">Macarons</a></li>
+        <li><a href="#boutique" data-cat="truffes">Truffes</a></li>
+        <li><a href="#boutique" data-cat="coffrets">Coffrets</a></li>
+      </ul>
+
+      <!-- 3. Search + cart icons -->
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="Search chocolates" aria-expanded="false"><svg><use href="#i-search"/></svg></button>
+        <button class="icon-btn" id="cartBtn" aria-label="Open cart"><svg><use href="#i-cart"/></svg><span class="badge" id="cartCount">0</span></button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><svg><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </nav>
+  <div class="search-panel" id="searchPanel" hidden>
+    <div class="wrap">
+      <input type="search" id="searchInput" placeholder="Cherchez… framboise, caramel, truffes" aria-label="Search chocolates">
+      <button class="icon-btn" id="searchClose" aria-label="Close search"><svg><use href="#i-close"/></svg></button>
+    </div>
+  </div>
+  <div class="valance" aria-hidden="true"></div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="script">Bonjour, gourmand !</span>
+        <h1>Little chocolates, made by hand <em>with a lot of amour.</em></h1>
+        <p class="lede">Bonbons, truffles and macarons made in small batches every morning in our kitchen, then tied up with ribbon and sent to your door.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#boutique">Shop the boutique</a>
+          <a class="btn ghost" href="#coffret">Build a gift box</a>
+        </div>
+        <div class="hero-notes">
+          <span><svg><use href="#i-star"/></svg>Ganache made fresh daily</span>
+          <span><svg><use href="#i-star"/></svg>Fair-trade cacao</span>
+          <span><svg><use href="#i-star"/></svg>Gift wrapping included</span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div id="heroBox"></div>
+        <div class="stamp" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>
+            <circle cx="60" cy="60" r="58" fill="var(--gold-soft)"/>
+            <text><textPath href="#circ">FAIT MAIN À PARIS · DEPUIS 1987 · </textPath></text>
+            <path d="M60 74c-7-4.8-10.5-8.6-10.5-13a5.2 5.2 0 0 1 10.5-1.3A5.2 5.2 0 0 1 70.5 61c0 4.4-3.5 8.2-10.5 13z" fill="var(--rose-deep)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="shop" id="boutique">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">La Boutique</span><h2>Our <span class="script">sweet</span> counter</h2></div>
+        <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+      </div>
+      <p class="result-note" id="resultNote"></p>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- PROMISES -->
+  <section class="promises">
+    <div class="wrap">
+      <div class="promise">
+        <svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="25" fill="var(--surface)"/><path d="M16 30c0-6 4-12 10-12s10 6 10 12v6H16z" fill="var(--cacao)"/><path d="M14 36h24" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/><circle cx="26" cy="14" r="3" fill="var(--rose-deep)"/></svg>
+        <div><h3>Fait main</h3><p>Every bonbon is piped, dipped and decorated by hand by our chocolatiers.</p></div>
+      </div>
+      <div class="promise">
+        <svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="25" fill="var(--surface)"/><ellipse cx="26" cy="27" rx="9" ry="14" fill="var(--cacao-soft)"/><path d="M26 13v28M20 18c3 2 9 2 12 0M19 26c4 2 10 2 14 0M20 34c3 2 9 2 12 0" stroke="var(--surface)" stroke-width="1.5" fill="none"/></svg>
+        <div><h3>Cacao équitable</h3><p>Single-origin beans from cooperatives in Madagascar, Peru and Ghana.</p></div>
+      </div>
+      <div class="promise">
+        <svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="25" fill="var(--surface)"/><rect x="13" y="22" width="26" height="18" rx="3" fill="var(--rose-deep)"/><rect x="11" y="17" width="30" height="7" rx="2" fill="var(--rose-deep)"/><path d="M26 17v23" stroke="var(--gold)" stroke-width="3"/><path d="M26 17c-4-6-10-4-8 0M26 17c4-6 10-4 8 0" stroke="var(--gold)" stroke-width="2.5" fill="none"/></svg>
+        <div><h3>Joli emballage</h3><p>Every order arrives in a striped box tied with a silk ribbon, ready to give.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE -->
+  <section class="feature" id="coffret">
+    <div class="wrap">
+      <div class="feature-card">
+        <div class="feature-copy">
+          <span class="eyebrow">Le coffret du mois</span>
+          <h2>The <span class="script">Bonbonnière</span>, 24 pieces for someone you love</h2>
+          <p>Our signature box holds 24 bonbons across eight flavours, from salted caramel to raspberry rose. A handwritten card comes with every box.</p>
+          <button class="btn primary" data-add="coffret-bonbonniere">Add to cart · 39,00 €</button>
+        </div>
+        <div class="feature-art" id="featureArt"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="letter">
+    <div class="wrap">
+      <div class="letter-box">
+        <span class="script" style="font-size:2rem">Une petite lettre ?</span>
+        <h2>Get new flavours before anyone else</h2>
+        <p>One sweet letter a month with seasonal bonbons, recipes and the odd secret discount.</p>
+        <form class="letter-form" id="letterForm" novalidate>
+          <input type="email" id="letterEmail" placeholder="votre@email.com" aria-label="Email address" required>
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+        <p class="letter-msg" id="letterMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:280px">
+      <span class="logo-text"><b>Petite Praline</b><small>Chocolaterie · Paris</small></span>
+      <p>A small, fictional chocolate shop made as a college mini project.</p>
+    </div>
+    <div><h4>La boutique</h4><ul><li>Bonbons</li><li>Tablettes</li><li>Macarons</li><li>Coffrets</li></ul></div>
+    <div><h4>La maison</h4><ul><li>Notre histoire</li><li>Livraison</li><li>Contact</li></ul></div>
+    <div><h4>Horaires</h4><ul><li>Mar – Sam · 10h – 19h</li><li>Dim · 10h – 14h</li><li>Fermé le lundi</li></ul></div>
+  </div>
+  <div class="footer-note"><div class="wrap">© 2026 Petite Praline · Demo store, no real orders or payments are taken.</div></div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Votre panier</h2>
+    <button class="icon-btn" id="cartClose" aria-label="Close cart"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-items" id="cartItems"></div>
+  <div class="drawer-foot" id="cartFoot"></div>
+</aside>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <span class="script" id="modalTitle">Merci !</span>
+    <h3 id="modalHead">Your order is being wrapped</h3>
+    <p id="modalText"></p>
+    <button class="btn primary" id="modalClose">Back to the boutique</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="sparkles" aria-hidden="true"></canvas>
+
+<script>
+"use strict";
+/* ================= Product catalogue ================= */
+// art: shape drawn as SVG · c1: chocolate colour · c2: decoration colour · tint: card background
+const PRODUCTS=[
+ {id:"bonbon-framboise", name:"Bonbon Framboise", en:"Raspberry ganache in a dark shell", cat:"bonbons", price:14.9, meta:"9 pièces · 110 g", cacao:64, tag:"Best-seller", art:"bonbon", c1:"#5b2a22", c2:"#e0577a", tint:"var(--rose)"},
+ {id:"praline-noisette", name:"Praliné Noisette", en:"Piedmont hazelnut praline", cat:"bonbons", price:13.5, meta:"9 pièces · 110 g", cacao:42, art:"bonbon", c1:"#8a5435", c2:"#f1d3a2", tint:"var(--gold-soft)"},
+ {id:"caramel-fleur-de-sel", name:"Caramel Fleur de Sel", en:"Salted butter caramel squares", cat:"bonbons", price:12.9, meta:"12 pièces · 130 g", cacao:58, tag:"Nouveau", art:"carre", c1:"#4b2519", c2:"#d9a84a", tint:"var(--pistache)"},
+ {id:"ganache-pistache", name:"Ganache Pistache", en:"Sicilian pistachio, white chocolate", cat:"bonbons", price:14.5, meta:"12 pièces · 130 g", cacao:33, art:"carre", c1:"#ead9bd", c2:"#7ea35a", tint:"var(--pistache)"},
+ {id:"tablette-noir-72", name:"Tablette Noir 72 %", en:"Madagascar single-origin dark bar", cat:"tablettes", price:7.5, meta:"100 g", cacao:72, art:"tablette", c1:"#3f1f15", c2:"#c75b74", tint:"var(--rose)"},
+ {id:"tablette-lait-caramel", name:"Tablette Lait Caramel", en:"Milk chocolate with caramel crunch", cat:"tablettes", price:6.9, meta:"100 g", cacao:40, art:"tablette", c1:"#8f5a3a", c2:"#c9dcb4", tint:"var(--gold-soft)"},
+ {id:"tablette-blanche-rose", name:"Tablette Blanche Rose", en:"White chocolate with rose petals", cat:"tablettes", price:7.2, meta:"100 g", cacao:30, tag:"Nouveau", art:"tablette", c1:"#f1e2cf", c2:"#e68aa0", tint:"var(--pistache)"},
+ {id:"macarons-chocolat", name:"Macarons Chocolat", en:"Dark chocolate ganache macarons", cat:"macarons", price:16, meta:"6 pièces", cacao:66, art:"macaron", c1:"#6a3a28", c2:"#3d1f15", tint:"var(--gold-soft)"},
+ {id:"macarons-rose-litchi", name:"Macarons Rose-Litchi", en:"Rose and lychee, white ganache", cat:"macarons", price:16.5, meta:"6 pièces", cacao:30, tag:"Best-seller", art:"macaron", c1:"#f2a9ba", c2:"#fff1e6", tint:"var(--rose)"},
+ {id:"truffes-champagne", name:"Truffes au Champagne", en:"Champagne ganache in cocoa dust", cat:"truffes", price:18.5, meta:"12 pièces · 150 g", cacao:70, art:"truffe", c1:"#4a2419", c2:"#d6b46a", tint:"var(--gold-soft)"},
+ {id:"coffret-bonbonniere", name:"Coffret Bonbonnière", en:"24 assorted bonbons, our signature box", cat:"coffrets", price:39, meta:"24 pièces · 290 g", cacao:60, tag:"Cadeau", art:"coffret", c1:"#f4cfd6", c2:"#c75b74", tint:"var(--rose)"},
+ {id:"coffret-petit-coeur", name:"Coffret Petit Cœur", en:"A heart-shaped box of 12 favourites", cat:"coffrets", price:24, meta:"12 pièces · 150 g", cacao:58, art:"coeur", c1:"#c75b74", c2:"#f1dcaa", tint:"var(--gold-soft)"},
+];
+const CATS=[["tout","Tout"],["bonbons","Bonbons"],["tablettes","Tablettes"],["macarons","Macarons"],["truffes","Truffes"],["coffrets","Coffrets"]];
+const euro=new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"});
+const FREE_SHIP=40, SHIP=4.9;
+
+/* ================= Product illustrations (SVG) ================= */
+function shade(hex,amt){ // lighten (amt>0) or darken (amt<0) a hex colour
+  const n=parseInt(hex.slice(1),16); let r=n>>16,g=n>>8&255,b=n&255;
+  const f=v=>Math.max(0,Math.min(255,Math.round(amt>0? v+(255-v)*amt : v*(1+amt))));
+  return "#"+[f(r),f(g),f(b)].map(v=>v.toString(16).padStart(2,"0")).join("");
+}
+let gid=0;
+function domeGrad(c,id){ return `<radialGradient id="${id}" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="${shade(c,.35)}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${shade(c,-.35)}"/></radialGradient>`; }
+function bonbon(x,y,r,c1,c2,id){
+  return `<g><ellipse cx="${x}" cy="${y+r*.9}" rx="${r*.95}" ry="${r*.22}" fill="#000" opacity=".12"/>
+    <circle cx="${x}" cy="${y}" r="${r}" fill="url(#${id})"/>
+    <path d="M${x-r*.7} ${y-r*.15} q${r*.175} ${-r*.35} ${r*.35} 0 t${r*.35} 0 t${r*.35} 0 t${r*.35} 0" stroke="${c2}" stroke-width="${r*.13}" fill="none" stroke-linecap="round"/>
+    <ellipse cx="${x-r*.35}" cy="${y-r*.45}" rx="${r*.22}" ry="${r*.12}" fill="#fff" opacity=".45" transform="rotate(-30 ${x-r*.35} ${y-r*.45})"/></g>`;
+}
+function art(p){
+  const id="g"+(gid++), c1=p.c1, c2=p.c2;
+  let s=`<svg viewBox="0 0 200 160" role="img" aria-label="${p.name}"><defs>${domeGrad(c1,id)}</defs>`;
+  if(p.art==="bonbon"){
+    s+=bonbon(70,92,30,c1,c2,id)+bonbon(132,92,30,c1,c2,id)+bonbon(101,58,30,c1,c2,id);
+  } else if(p.art==="carre"){
+    for(const [x,y] of [[42,70],[104,70],[73,40]]){
+      s+=`<ellipse cx="${x+27}" cy="${y+62}" rx="34" ry="7" fill="#000" opacity=".12"/>
+      <rect x="${x}" y="${y+8}" width="54" height="50" rx="7" fill="${shade(c1,-.25)}"/>
+      <rect x="${x}" y="${y}" width="54" height="48" rx="7" fill="url(#${id})"/>
+      <path d="M${x+10} ${y+14} l12 -4 l8 9 l-10 6z" fill="${c2}"/>
+      <path d="M${x+30} ${y+30} l6 -3 l4 5 l-6 3z" fill="${c2}" opacity=".8"/>`;
+    }
+  } else if(p.art==="tablette"){
+    s+=`<g transform="rotate(-8 100 80)"><ellipse cx="100" cy="132" rx="78" ry="9" fill="#000" opacity=".12"/>
+      <rect x="28" y="30" width="144" height="94" rx="8" fill="${shade(c1,-.2)}"/>`;
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++) s+=`<rect x="${34+c*30}" y="${36+r*29}" width="25" height="24" rx="4" fill="url(#${id})"/>`;
+    s+=`<rect x="122" y="24" width="58" height="106" rx="4" fill="${c2}"/>
+      <path d="M122 24v106" stroke="${shade(c2,-.2)}" stroke-width="2"/>`;
+    for(let k=0;k<6;k++) s+=`<path d="M${128+k*9} 24v106" stroke="#fff" stroke-width="2" opacity=".35"/>`;
+    s+=`<circle cx="151" cy="77" r="14" fill="#fff" opacity=".85"/><path d="M151 84c-5-3.4-7.5-6-7.5-9a3.7 3.7 0 0 1 7.5-1 3.7 3.7 0 0 1 7.5 1c0 3-2.5 5.6-7.5 9z" fill="${shade(c2,-.35)}"/></g>`;
+  } else if(p.art==="macaron"){
+    const mac=(x,y,sc)=>`<g transform="translate(${x} ${y}) scale(${sc})"><ellipse cx="0" cy="34" rx="40" ry="7" fill="#000" opacity=".12"/>
+      <ellipse cx="0" cy="18" rx="38" ry="14" fill="${shade(c1,-.12)}"/>
+      <path d="M-36 14 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0 q4 6 8 0" fill="${shade(c1,-.05)}"/>
+      <rect x="-35" y="2" width="70" height="10" rx="5" fill="${c2}"/>
+      <ellipse cx="0" cy="-2" rx="38" ry="16" fill="url(#${id})"/>
+      <ellipse cx="-12" cy="-8" rx="10" ry="4" fill="#fff" opacity=".35"/></g>`;
+    s+=mac(66,96,1)+mac(136,92,.95)+mac(100,56,1);
+  } else if(p.art==="truffe"){
+    const tr=(x,y,r)=>{ let d=`<ellipse cx="${x}" cy="${y+r*.92}" rx="${r}" ry="${r*.2}" fill="#000" opacity=".12"/><circle cx="${x}" cy="${y}" r="${r}" fill="url(#${id})"/>`;
+      for(let k=0;k<22;k++){ const a=k*2.4, rr=r*Math.sqrt((k*37%97)/97)*.9; d+=`<circle cx="${(x+Math.cos(a)*rr).toFixed(1)}" cy="${(y+Math.sin(a)*rr).toFixed(1)}" r="${(1+(k%3)*.6).toFixed(1)}" fill="${c2}" opacity=".7"/>`; } return d; };
+    s+=tr(66,98,30)+tr(134,98,30)+tr(100,62,32);
+  } else if(p.art==="coffret"){
+    s+=`<ellipse cx="100" cy="140" rx="82" ry="9" fill="#000" opacity=".12"/>
+      <rect x="22" y="40" width="156" height="96" rx="12" fill="${shade(c1,-.1)}"/>
+      <rect x="30" y="48" width="140" height="80" rx="8" fill="#fffaf6"/>`;
+    const cols=["#5b2a22","#8a5435","#3f1f15","#d9b48a"];
+    let n=0; for(let r=0;r<2;r++) for(let c=0;c<4;c++){ const gi=id+"b"+n; s+=`<defs>${domeGrad(cols[n%4],gi)}</defs>`+bonbon(48+c*35,70+r*36,13,cols[n%4],n%2?"#f1dcaa":"#e0577a",gi); n++; }
+    s+=`<path d="M100 40v96" stroke="${c2}" stroke-width="7"/><path d="M22 88h156" stroke="${c2}" stroke-width="7" opacity=".0"/>
+      <path d="M100 40c-14-22-38-14-26 0zM100 40c14-22 38-14 26 0z" fill="${c2}"/><circle cx="100" cy="40" r="6" fill="${shade(c2,-.2)}"/>`;
+  } else if(p.art==="coeur"){
+    s+=`<ellipse cx="100" cy="142" rx="70" ry="8" fill="#000" opacity=".12"/>
+      <path d="M100 140C52 110 28 86 28 60a32 32 0 0 1 72-12 32 32 0 0 1 72 12c0 26-24 50-72 80z" fill="url(#${id})"/>
+      <path d="M100 128C62 104 42 84 42 62a22 22 0 0 1 49-8l9 10 9-10a22 22 0 0 1 49 8c0 22-20 42-58 66z" fill="none" stroke="${c2}" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <path d="M58 26l6 14M142 26l-6 14" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="68" cy="60" rx="14" ry="7" fill="#fff" opacity=".3" transform="rotate(-35 68 60)"/>`;
+  }
+  return s+"</svg>";
+}
+
+/* hero: an open box of assorted bonbons */
+function heroBox(){
+  const flav=[["#5b2a22","#e0577a"],["#8a5435","#f1d3a2"],["#3f1f15","#d9a84a"],["#ead9bd","#7ea35a"],["#6a3a28","#f2a9ba"],["#4b2519","#f1dcaa"],["#8f5a3a","#3f1f15"],["#3f1f15","#e0577a"],["#d9b48a","#5b2a22"]];
+  let s=`<svg class="box" viewBox="0 0 440 400" role="img" aria-label="An open box of nine assorted bonbons"><defs>`;
+  flav.forEach((f,i)=>s+=domeGrad(f[0],"hb"+i));
+  s+=`<pattern id="stripes" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(0)"><rect width="22" height="22" fill="var(--rose)"/><rect width="11" height="22" fill="var(--surface)"/></pattern></defs>
+    <g class="float"><path d="M70 38 h300 a16 16 0 0 1 16 16 v30 h-332 v-30 a16 16 0 0 1 16-16z" fill="url(#stripes)" transform="rotate(-9 220 60) translate(0 -14)"/></g>
+    <rect x="40" y="90" width="360" height="290" rx="26" fill="url(#stripes)"/>
+    <rect x="58" y="108" width="324" height="254" rx="16" fill="var(--surface)"/>`;
+  flav.forEach((f,i)=>{ const x=112+(i%3)*108, y=158+Math.floor(i/3)*80;
+    s+=`<circle cx="${x}" cy="${y+4}" r="38" fill="var(--gold-soft)" opacity=".7"/>`+bonbon(x,y,30,f[0],f[1],"hb"+i); });
+  s+=`<path d="M220 90v290" stroke="var(--rose-deep)" stroke-width="10" opacity=".9"/>
+    <path d="M220 92c-30-50-86-30-56 2zM220 92c30-50 86-30 56 2z" fill="var(--rose-deep)"/>
+    <path d="M214 96l-26 52M226 96l26 52" stroke="var(--rose-deep)" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="220" cy="92" r="12" fill="${shade("#c75b74",-.25)}"/>`;
+  for(const [x,y,sc] of [[26,70,1],[412,150,.8],[400,40,.6],[30,300,.7]]) s+=`<path class="float" style="animation-delay:${x%3}s" transform="translate(${x} ${y}) scale(${sc})" d="M0-14c.8 7.8 6.2 13.2 14 14-7.8.8-13.2 6.2-14 14-.8-7.8-6.2-13.2-14-14 7.8-.8 13.2-6.2 14-14z" fill="var(--gold)"/>`;
+  return s+"</svg>";
+}
+
+/* ================= Shop state ================= */
+const $=s=>document.querySelector(s);
+const state={cat:"tout", q:"", cart:{}};
+try{ const saved=JSON.parse(localStorage.getItem("pp-cart")||"{}"); if(saved&&typeof saved==="object") state.cart=saved; }catch(e){}
+const saveCart=()=>{ try{ localStorage.setItem("pp-cart",JSON.stringify(state.cart)); }catch(e){} };
+const byId=id=>PRODUCTS.find(p=>p.id===id);
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+
+function renderChips(){
+  $("#chips").innerHTML=CATS.map(([k,l])=>`<button class="chip" data-cat="${k}" aria-pressed="${state.cat===k}">${l}</button>`).join("");
+  document.querySelectorAll(".nav-links a").forEach(a=>a.setAttribute("aria-current",a.dataset.cat===state.cat?"true":"false"));
+}
+function renderGrid(){
+  const q=norm(state.q.trim());
+  const list=PRODUCTS.filter(p=>(state.cat==="tout"||p.cat===state.cat)&&(!q||norm(p.name+" "+p.en+" "+p.cat).includes(q)));
+  const catName=CATS.find(c=>c[0]===state.cat)[1];
+  $("#resultNote").textContent= q? `${list.length} result${list.length===1?"":"s"} for “${state.q.trim()}”${state.cat!=="tout"?" in "+catName:""}` : `${list.length} chocolates${state.cat!=="tout"?" · "+catName:""}`;
+  if(!list.length){
+    $("#grid").innerHTML=`<div class="empty"><span class="script">Oh là là…</span><p>No chocolates match that search. Try “caramel” or “rose”.</p><button class="btn ghost" id="resetSearch">Show all chocolates</button></div>`;
+    $("#resetSearch").onclick=()=>{ state.q=""; state.cat="tout"; $("#searchInput").value=""; renderChips(); renderGrid(); };
+    return;
+  }
+  $("#grid").innerHTML=list.map(p=>`
+    <article class="card">
+      <div class="card-art" style="--tint:${p.tint}">${p.tag?`<span class="tag">${p.tag}</span>`:""}<span class="cocoa" title="${p.cacao}% cocoa">${p.cacao}%<small>CACAO</small></span>${art(p)}</div>
+      <div class="card-body">
+        <h3>${p.name}</h3><p class="en">${p.en}</p><p class="meta">${p.meta}</p>
+        <div class="card-foot"><span class="price">${euro.format(p.price)}</span>
+          <button class="add" data-add="${p.id}" aria-label="Add ${p.name} to cart">Ajouter +</button></div>
+      </div>
+    </article>`).join("");
+}
+
+/* ================= Cart ================= */
+const count=()=>Object.values(state.cart).reduce((a,b)=>a+b,0);
+const subtotal=()=>Object.entries(state.cart).reduce((s,[id,q])=>s+(byId(id)?.price||0)*q,0);
+function addToCart(id, btn){
+  state.cart[id]=(state.cart[id]||0)+1; saveCart(); renderCart();
+  const b=$("#cartCount"); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
+  if(!$("#drawer").classList.contains("open")) toast(`${byId(id).name} ajouté au panier ✓`);
+  if(btn&&btn.classList.contains("add")){ btn.classList.add("added"); btn.textContent="Ajouté ✓"; setTimeout(()=>{ btn.classList.remove("added"); btn.textContent="Ajouter +"; },1300); }
+}
+function setQty(id,q){ if(q<=0) delete state.cart[id]; else state.cart[id]=q; saveCart(); renderCart(); }
+function renderCart(){
+  $("#cartCount").textContent=count();
+  $("#cartBtn").setAttribute("aria-label",`Open cart, ${count()} item${count()===1?"":"s"}`);
+  const ids=Object.keys(state.cart).filter(byId);
+  if(!ids.length){
+    $("#cartItems").innerHTML=`<div class="drawer-empty"><span class="script">Panier vide</span><p>Your cart is empty. A little chocolate never hurt anyone.</p><button class="btn primary" id="emptyShop">Browse the boutique</button></div>`;
+    $("#cartFoot").innerHTML=""; $("#emptyShop").onclick=()=>{ closeCart(); location.hash="boutique"; };
+    return;
+  }
+  $("#cartItems").innerHTML=ids.map(id=>{ const p=byId(id), q=state.cart[id];
+    return `<div class="line"><div class="line-art" style="--tint:${p.tint}">${art(p)}</div>
+      <div class="line-info"><b>${p.name}</b><span>${euro.format(p.price)} · ${p.meta}</span></div>
+      <div class="qty"><button data-dec="${id}" aria-label="Remove one ${p.name}">−</button><output>${q}</output><button data-inc="${id}" aria-label="Add one ${p.name}">+</button></div></div>`; }).join("");
+  const sub=subtotal(), ship=sub>=FREE_SHIP?0:SHIP, left=Math.max(0,FREE_SHIP-sub);
+  $("#cartFoot").innerHTML=`
+    <p class="ship-note">${left>0?`Add ${euro.format(left)} more for free delivery`:"Free delivery unlocked 🎀"}</p>
+    <div class="ship-bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>
+    <div class="sum"><span>Subtotal</span><span>${euro.format(sub)}</span></div>
+    <div class="sum"><span>Delivery</span><span>${ship?euro.format(ship):"Offerte"}</span></div>
+    <div class="sum total"><span>Total</span><span>${euro.format(sub+ship)}</span></div>
+    <button class="btn primary" id="checkout" style="justify-content:center;margin-top:6px">Checkout</button>`;
+  $("#checkout").onclick=checkout;
+}
+function checkout(){
+  const n=count(), total=subtotal()+(subtotal()>=FREE_SHIP?0:SHIP);
+  $("#modalText").textContent=`${n} treat${n===1?"":"s"} · ${euro.format(total)}. This is a demo shop for a college project, so no payment was taken and nothing will be shipped.`;
+  state.cart={}; saveCart(); renderCart(); closeCart();
+  $("#modal").hidden=false; $("#modalClose").focus();
+  burst(innerWidth/2, innerHeight/2, 60);
+}
+function openCart(){ $("#toast").classList.remove("show"); $("#drawer").classList.add("open"); $("#overlay").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false"); $("#cartClose").focus(); }
+function closeCart(){ $("#drawer").classList.remove("open"); $("#overlay").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true"); }
+
+let tt; function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
+
+/* ================= Navbar behaviour ================= */
+const mq=matchMedia("(max-width:880px)");
+function syncNav(){ $("#navLinks").hidden=mq.matches && $("#menuBtn").getAttribute("aria-expanded")!=="true"; }
+$("#menuBtn").onclick=()=>{ const open=$("#menuBtn").getAttribute("aria-expanded")!=="true"; $("#menuBtn").setAttribute("aria-expanded",open); $("#menuBtn").setAttribute("aria-label",open?"Close menu":"Open menu"); $("#menuBtn").innerHTML=`<svg><use href="#i-${open?"close":"menu"}"/></svg>`; syncNav(); };
+mq.addEventListener("change",()=>{ $("#menuBtn").setAttribute("aria-expanded","false"); $("#menuBtn").innerHTML='<svg><use href="#i-menu"/></svg>'; syncNav(); });
+function closeMenu(){ if(mq.matches){ $("#menuBtn").setAttribute("aria-expanded","false"); $("#menuBtn").innerHTML='<svg><use href="#i-menu"/></svg>'; syncNav(); } }
+
+$("#searchBtn").onclick=()=>{ const p=$("#searchPanel"); p.hidden=!p.hidden; $("#searchBtn").setAttribute("aria-expanded",!p.hidden); if(!p.hidden) $("#searchInput").focus(); };
+$("#searchClose").onclick=()=>{ $("#searchPanel").hidden=true; $("#searchBtn").setAttribute("aria-expanded","false"); };
+$("#searchInput").addEventListener("input",e=>{ state.q=e.target.value; renderGrid(); });
+$("#searchInput").addEventListener("keydown",e=>{ if(e.key==="Enter"){ $("#boutique").scrollIntoView({behavior:"smooth"}); } });
+
+document.addEventListener("click",e=>{
+  const cat=e.target.closest("[data-cat]");
+  if(cat){ state.cat=cat.dataset.cat; renderChips(); renderGrid(); closeMenu(); if(cat.tagName==="A"){ e.preventDefault(); $("#boutique").scrollIntoView({behavior:"smooth"}); } }
+  const add=e.target.closest("[data-add]"); if(add) addToCart(add.dataset.add, add);
+  const inc=e.target.closest("[data-inc]"); if(inc) setQty(inc.dataset.inc,(state.cart[inc.dataset.inc]||0)+1);
+  const dec=e.target.closest("[data-dec]"); if(dec) setQty(dec.dataset.dec,(state.cart[dec.dataset.dec]||0)-1);
+});
+$("#cartBtn").onclick=openCart; $("#cartClose").onclick=closeCart; $("#overlay").onclick=closeCart;
+$("#modalClose").onclick=()=>{ $("#modal").hidden=true; };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeCart(); $("#modal").hidden=true; $("#searchPanel").hidden=true; closeMenu(); } });
+
+$("#letterForm").addEventListener("submit",e=>{
+  e.preventDefault(); const v=$("#letterEmail").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ $("#letterMsg").textContent="Please enter an email address like marie@exemple.fr."; return; }
+  $("#letterMsg").textContent=`Merci ! We'll write to ${v} soon. (Demo form, nothing is sent.)`; $("#letterEmail").value="";
+});
+
+/* ================= Chocolate sparkles on every touch / click ================= */
+const cv=$("#sparkles"), cx=cv.getContext("2d");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let parts=[], running=false, dpr=1;
+function sizeCanvas(){ dpr=Math.min(2,devicePixelRatio||1); cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; cx.setTransform(dpr,0,0,dpr,0,0); }
+sizeCanvas(); addEventListener("resize",sizeCanvas);
+const CHOC=["#3d1f14","#5a2e1e","#7b4128","#9b5a36"], GOLD=["#e8b84a","#f5d27a","#d4a03a"], PINK=["#ee8aa2","#f6b3c3"];
+const pick=a=>a[(Math.random()*a.length)|0];
+function spawn(x,y,kind,speed){
+  const a=Math.random()*Math.PI*2, v=speed*(0.4+Math.random()*0.8);
+  parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-speed*.35,life:1,decay:.012+Math.random()*.015,
+    kind, size: kind==="drop"? 3+Math.random()*4 : kind==="star"? 5+Math.random()*6 : 5+Math.random()*4,
+    rot:Math.random()*6.28, vr:(Math.random()-.5)*.25, color: kind==="drop"?pick(CHOC): kind==="star"?pick(GOLD):pick(PINK)});
+}
+function burst(x,y,n=22){
+  n=reduce?Math.ceil(n/3):n;
+  for(let i=0;i<n;i++){ const r=Math.random(); spawn(x,y, r<.5?"drop": r<.85?"star":"heart", reduce?2:5); }
+  if(!running){ running=true; requestAnimationFrame(loop); }
+}
+function drawStar(p){ const s=p.size; cx.beginPath(); cx.moveTo(0,-s); cx.quadraticCurveTo(s*.15,-s*.15,s,0); cx.quadraticCurveTo(s*.15,s*.15,0,s); cx.quadraticCurveTo(-s*.15,s*.15,-s,0); cx.quadraticCurveTo(-s*.15,-s*.15,0,-s); cx.fill(); }
+function drawHeart(p){ const s=p.size/6; cx.beginPath(); cx.moveTo(0,3*s); cx.bezierCurveTo(-6*s,-1*s,-3*s,-6*s,0,-2.5*s); cx.bezierCurveTo(3*s,-6*s,6*s,-1*s,0,3*s); cx.fill(); }
+function drawDrop(p){ const s=p.size; cx.beginPath(); cx.arc(0,0,s,0,Math.PI*2); cx.fill(); cx.fillStyle="rgba(255,255,255,.45)"; cx.beginPath(); cx.arc(-s*.35,-s*.35,s*.32,0,Math.PI*2); cx.fill(); }
+function loop(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  parts=parts.filter(p=>p.life>0);
+  for(const p of parts){
+    p.vy+=p.kind==="drop"?.16:.06; p.vx*=.985; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life-=p.decay;
+    cx.save(); cx.globalAlpha=Math.max(0,p.life); cx.translate(p.x,p.y); cx.rotate(p.rot); cx.fillStyle=p.color;
+    const sc=p.kind==="star"? .6+.4*Math.sin(p.life*14) : 1; cx.scale(sc,sc);
+    if(p.kind==="star") drawStar(p); else if(p.kind==="heart") drawHeart(p); else drawDrop(p);
+    cx.restore();
+  }
+  if(parts.length) requestAnimationFrame(loop); else { running=false; cx.clearRect(0,0,innerWidth,innerHeight); }
+}
+addEventListener("pointerdown",e=>burst(e.clientX,e.clientY),{passive:true});
+// a light trail of gold glitter while a mouse moves (not on touch screens)
+let lastTrail=0;
+addEventListener("pointermove",e=>{
+  if(reduce||e.pointerType!=="mouse") return;
+  const now=performance.now(); if(now-lastTrail<45) return; lastTrail=now;
+  spawn(e.clientX,e.clientY,Math.random()<.7?"star":"drop",1.2); parts[parts.length-1].size*=.55;
+  if(!running){ running=true; requestAnimationFrame(loop); }
+},{passive:true});
+
+/* ================= Boot ================= */
+$("#heroBox").innerHTML=heroBox();
+$("#featureArt").innerHTML=art(byId("coffret-bonbonniere"));
+syncNav(); renderChips(); renderGrid(); renderCart();
+</script>
+
+</body>
+</html>
